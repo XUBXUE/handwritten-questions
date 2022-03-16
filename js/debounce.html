@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>debounce</title>
+</head>
+<body>
+  <input id="myInput" />
+  <script>
+    window.onload = function () {
+      const input = document.querySelector('#myInput');
+      function debounce(fn, delay) {
+        let timer = null;
+        let context = this;
+        return function () {
+          let args = [...arguments];
+          timer && clearTimeout(timer);
+          timer = setTimeout(() => {
+            fn.apply(context, args);
+          }, delay);
+        }
+      }
+
+      const inputEvent = debounce((event) => {
+        console.log(`input content: ${event.target.value}`);
+      }, 1000);
+      input.addEventListener('input', inputEvent);
+    }
+  </script>
+</body>
+</html>

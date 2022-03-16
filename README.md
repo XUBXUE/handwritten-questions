@@ -1,2 +1,3 @@
-# handwritten-questions
-联系各种手写题
+## 联系各种手写题
+  - [x] 防抖debounce
+  - [ ] 节流throttle
