@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>函数柯里化</title>
+  </head>
+  <body>
+    <script>
+      function sum(a, b, c, d) {
+        return a + b + c + d;
+      }
+
+      function currying(fn, arr = []) {
+        // 获取函数的形参长度
+        const length = fn.length;
+        return function (...arg) {
+          const args = [...arr, ...arg];
+          if (args.length < length) {
+            return currying(fn, args);
+          } else {
+            return fn.apply(this, args);
+          }
+        };
+      }
+
+      // const sum1 = currying(sum);
+
+      // const sum2 = sum1(2);
+      // const sum3 = sum2(3);
+      // const sum4 = sum3(4);
+      // const sum5 = sum4(6);
+      // console.log(sum5);
+
+      // const sum2 = sum1(2)(3);
+      // const sum3 = sum2(4, 6);
+      // console.log(sum3);
+
+      // const sum2 = sum1(2)(3)(4)(6);
+      // console.log(sum2);
+
+      // const sum2 = sum1(2, 3, 4, 6);
+      // console.log(sum2);
+
+      // const sum1 = currying(sum, [2, 3]);
+      // const sum2 = sum1(4, 6);
+      // console.log(sum2);
+    </script>
+  </body>
+</html>

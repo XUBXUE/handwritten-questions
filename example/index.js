@@ -20,4 +20,33 @@ function debounce(fn, delay) {
   };
 }
 
+/**
+ * 节流函数
+ */
 function throttle() {}
+
+/**
+ * 柯里化函数
+ * 实现思路：
+ * 定义一个柯里化函数接受两个入参：fn要柯里化的函数、收集的要传给fn的入参
+ * 获取fn的形参长度
+ * 返回一个函数
+ * 函数通过闭包方式收集上一次柯里化收集的参数和本次传入的参数
+ * 判断参数长度是否小于形参长度 如果小于则返回柯里化函数并传入已收集的参数
+ * 如果不小于则返回fn的执行结果
+ */
+function currying(fn, arr = []) {
+  // 获取函数的形参长度
+  const length = fn.length;
+  return function (...arg) {
+    // 将之前收集的参数和传入的参数合并
+    const args = [...arr, ...arg];
+    // 如果参数长度小于形参长度则继续执行柯里化收集参数
+    // 否则返回函数的执行结果
+    if (args.length < length) {
+      return currying(fn, args);
+    } else {
+      return fn.apply(this, args);
+    }
+  };
+}
