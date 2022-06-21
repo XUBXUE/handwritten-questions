@@ -21,7 +21,17 @@ function debounce(fn, delay) {
 /**
  * 节流函数
  */
-function throttle() {}
+function throttle() {
+  let flag = true;
+  return function () {
+    if (!flag) return;
+    flag = false;
+    setTimeout(() => {
+      fn(this, arguments);
+      flag = true;
+    }, delay);
+  };
+}
 
 /**
  * 柯里化函数
