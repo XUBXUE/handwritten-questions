@@ -8,23 +8,41 @@
   </head>
   <body>
     <input id="myInput" />
+    <input type="submit" id="myBtn" />
     <script>
       window.onload = function () {
         const input = document.querySelector("#myInput");
-        function debounce(fn, delay) {
+        const btn = document.querySelector("#myBtn");
+        function debounce(fn, delay = 1000, immediate) {
           let timer = null;
           return function () {
             timer && clearTimeout(timer);
-            timer = setTimeout(() => {
-              fn.apply(this, arguments);
-            }, delay);
+            if (immediate) {
+              !timer && fn.apply(this, arguments);
+              timer = setTimeout(() => {
+                timer = null;
+              }, delay);
+            } else {
+              timer = setTimeout(() => {
+                fn.apply(this, arguments);
+              }, delay);
+            }
           };
         }
 
         const inputEvent = debounce((event) => {
           console.log(`input content: ${event.target.value}`);
         }, 1000);
+
+        const btnEvent = debounce(
+          () => {
+            console.log(input.value);
+          },
+          1000,
+          true
+        );
         input.addEventListener("input", inputEvent);
+        btn.addEventListener("click", btnEvent);
       };
     </script>
   </body>
