@@ -1,3 +1,5 @@
 ## 练习各种手写题
-  - [x] 防抖debounce
-  - [ ] 节流throttle
+
+- [x] 防抖 debounce
+- [x] 节流 throttle
+- [x] 函数柯里化 currying
