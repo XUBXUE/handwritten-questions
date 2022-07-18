@@ -8,13 +8,20 @@
  * 返回一个延迟执行回调函数的函数
  * 逻辑为先清除timer再重新定义一个timer并将上下文和参数通过apply调用回调函数
  */
-function debounce(fn, delay) {
+function debounce(fn, delay = 1000, immediate) {
   let timer = null;
   return function () {
     timer && clearTimeout(timer);
-    timer = setTimeout(() => {
-      fn.apply(this, arguments);
-    }, delay);
+    if (immediate) {
+      !timer && fn.apply(this, arguments);
+      timer = setTimeout(() => {
+        timer = null;
+      }, delay);
+    } else {
+      timer = setTimeout(() => {
+        fn.apply(this, arguments);
+      }, delay);
+    }
   };
 }
 
