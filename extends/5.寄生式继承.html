@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.寄生式继承</title>
+  </head>
+  <body>
+    <script>
+      // 个人理解：相当于对原型式继承包了一个工厂函数的壳
+      // 实现继承的方法
+      function object(o) {
+        return Object.create(o);
+      }
+
+      // 返回继承并增强的对象的工厂函数
+      function createObject(original) {
+        // 返回实现了继承了的对象
+        const clone = object(original);
+        // 增强此对象
+        clone.sayHi = function () {
+          console.log("Hi!");
+        };
+
+        return clone;
+      }
+
+      const obj = {
+        name: "brush",
+        colors: ["red", "blue", "yellow"],
+      };
+
+      const brush = createObject(obj);
+      console.log(brush);
+    </script>
+  </body>
+</html>

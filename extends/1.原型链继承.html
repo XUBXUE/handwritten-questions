@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1.原型链继承</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 优点：
+       * 1.原型方法做到可重用
+       * 缺点：
+       * 1.原型上最好不要定义引用类型属性 因为所有实例会共享此属性
+       * 2.不能给父类型的构造函数传参
+       */
+      function SuperType() {
+        this.superProperty = true;
+      }
+      SuperType.prototype.getSuperProperty = function () {
+        return this.superProperty;
+      };
+      SuperType.prototype.colors = ["red", "green"];
+
+      function SubType() {
+        this.supProperty = false;
+      }
+      SubType.prototype = new SuperType();
+      SubType.prototype.getSubProperty = function () {
+        return this.supProperty;
+      };
+
+      const instance1 = new SubType();
+      instance1.colors.push("yellow");
+      console.log(instance1.colors); // ['red', 'green', 'yellow']
+
+      const instance2 = new SubType();
+      console.log(instance2.colors); // ['red', 'green', 'yellow']
+    </script>
+  </body>
+</html>

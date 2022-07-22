@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3.组合继承</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 组合继承又叫：伪经典继承，是综合了原型链和盗用构造函数继承两个的优点。
+       * 利用原型链继承父类原型上属性和方法、利用盗用构造函数继承继承实例属性。
+       * 这样既可以实现引用类型属性值不共享、方法还重用。
+       */
+      function Person(name) {
+        this.name = name;
+        this.hobbys = ["sing", "dance", "rap", "basketball"];
+      }
+      Person.prototype.introduce = function () {
+        console.log(`大家好，我是${this.name}，时长${this.duration}`);
+      };
+
+      function Singer(duration, name) {
+        Person.call(this, name); // 这里会创建两个实例属性name和hobbys 这两个实例属性会遮蔽原型链上的name和hobbys
+        this.duration = duration;
+      }
+
+      Singer.prototype = new Person();
+      Singer.prototype.constructor = Singer;
+      Singer.prototype.sing = function (lyric) {
+        console.log(lyric);
+      };
+
+      const singer1 = new Singer("两年半", "蔡徐坤");
+      singer1.introduce();
+      singer1.sing("鸡你太美~");
+      singer1.hobbys.push("sao");
+      console.log(singer1);
+
+      const singer2 = new Singer("15年", "吴亦凡");
+      singer2.introduce();
+      singer2.sing("你看这个面它又长又宽~");
+      singer2.hobbys.push("rape");
+      console.log(singer2);
+    </script>
+  </body>
+</html>

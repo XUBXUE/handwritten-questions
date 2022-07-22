@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4.原型式继承</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 原型式继承很适合不需要创建构造函数，但仍然需要再对象间共享信息的场合。
+       */
+
+      // 方式一
+      function object(o) {
+        function F() {}
+        F.prototype = o;
+        return new F();
+      }
+
+      const obj = {
+        name: "niko",
+        colors: ["red", "yellow", "green"],
+      };
+
+      const instance1 = object(obj);
+      instance1.name = "dev1ce";
+      instance1.colors.push("blue");
+      const instance2 = object(obj);
+      instance2.name = "m0nesy";
+      instance2.colors.push("white");
+
+      console.log(instance1); // name: dev1ce
+      console.log(instance2); // name: m0nesy
+      console.log(obj); // name: niko
+
+      // 方式二 ECMA2015将以上方式规范化 （Object.create）
+
+      const instance3 = Object.create(obj);
+      instance3.name = "twistzz";
+      instance3.colors.push("black");
+      const instance4 = Object.create(obj);
+      instance4.name = "huNter-";
+      instance4.colors.push("pink");
+
+      console.log(instance3); // name: dev1ce
+      console.log(instance4); // name: m0nesy
+      console.log(obj); // name: niko
+    </script>
+  </body>
+</html>

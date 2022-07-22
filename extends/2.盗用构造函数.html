@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.盗用构造函数</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 又叫：对象伪装；经典继承
+       * 优点：
+       * 1.可以给父类型构造函数传参
+       * 2.引用类型属性值不会共享
+       * 缺点：
+       * 1.只能在构造函数中定义方法，且不能重用
+       * 2.不能访问父类原型上定义的属性和方法
+       * 所以盗用构造函数不适合单独使用
+       */
+      function Person(name) {
+        this.name = name;
+        this.hobbys = ["sing", "dance", "rap", "basketball"];
+      }
+      Person.prototype.laugh = function () {
+        console.log("hhh");
+      };
+
+      function Child(name) {
+        Person.call(this, name); // 先创建父级实例属性
+        this.age = 8; // 再创建子级实例属性， 这样防止父级属性覆盖子级属性
+      }
+
+      const child1 = new Child("xiaoming");
+      child1.hobbys.push("play computer");
+      console.log(child1);
+
+      const child2 = new Child("xiaohong");
+      console.log(child2);
+      console.log("laugh", child2.laugh); // undefined
+    </script>
+  </body>
+</html>
