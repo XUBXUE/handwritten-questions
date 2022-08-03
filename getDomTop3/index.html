@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <span></span><span></span><span></span><span></span><span></span
+    ><span></span><span></span><span></span><span></span><span></span
+    ><span></span><span></span>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <script>
+      const doms = document.querySelectorAll("*");
+      const domsArray = Array.from(doms);
+      const domsObject = domsArray.reduce((prev, dom) => {
+        const tag = dom.tagName;
+        prev[tag] = (prev[tag] || 0) + 1;
+        return prev;
+      }, {});
+      const domCountRank = Object.entries(domsObject).sort(
+        (a, b) => b[1] - a[1]
+      );
+      const top3 = domCountRank.splice(0, 3);
+      console.log(top3.map((i) => i[0]));
+    </script>
+  </body>
+</html>
